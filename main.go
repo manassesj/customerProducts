@@ -13,7 +13,7 @@ var customerMapData = customerData.GetCustomerDataInstance().Data
 
 func main() {
 
-	file, err := utils.GetFile("./teste.json")
+	file, err := utils.GetFile("./data.json")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -53,7 +53,7 @@ func createCustomer(customer map[string]models.CustomerResult, data models.DataS
 
 func addCustomerResult(customerResult models.CustomerResult, customerData models.DataStruct) {
 	if _, ok := customerResult.UniqueProducts[customerData.Group+"-"+customerData.Product]; !ok {
-		customerResult.UniqueProducts[customerData.Group+customerData.Product] = ""
+		customerResult.UniqueProducts[customerData.Group+"-"+customerData.Product] = ""
 	}
 }
 
