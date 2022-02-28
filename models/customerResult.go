@@ -1,6 +1,6 @@
 package models
 
 type CustomerResult struct {
-	Id             string
+	Count          int
 	UniqueProducts map[string]string
 }
