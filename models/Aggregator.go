@@ -12,8 +12,8 @@ import (
 type Aggregator struct {
 }
 
-func (*Aggregator) Execute() {
-	file, err := utils.GetFile("./test.json")
+func (*Aggregator) Execute(dataPath string, output string) {
+	file, err := utils.GetFile(dataPath)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -28,9 +28,12 @@ func (*Aggregator) Execute() {
 		err = json.Unmarshal([]byte(scanner.Text()), &payload)
 		buildMap(customerMap, payload)
 	}
-	fmt.Print(customerMap)
 
-	err = buildFile(customerMap, "./teste.txt")
+	if output != "db" {
+		err = buildFile(customerMap, output)
+	} else {
+
+	}
 	fmt.Println(err)
 }
 
