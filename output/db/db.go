@@ -22,9 +22,9 @@ func (*DbOutput) FlushData(customerMap map[string]int64, filePath string) error 
 	}
 
 	newDataStruct := models.DataStruct{
-		ClientID: "1",
-		Product:  "1",
-		Group:    "1",
+		ClientID: "2",
+		Product:  "2",
+		Group:    "2",
 		Time:     "2022/02/11 21:00",
 		Count:    1,
 	}
