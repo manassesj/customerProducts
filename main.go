@@ -2,9 +2,9 @@ package main
 
 import (
 	"customerProduts/customerData"
+	"customerProduts/output/db"
 	"customerProduts/output/file"
 	"customerProduts/service"
-	"fmt"
 	"os"
 )
 
@@ -17,7 +17,7 @@ func main() {
 	aggregator := new(service.Aggregator)
 	switch output {
 	case "db":
-		fmt.Println("db")
+		aggregator.OutputProvider = new(db.DbOutput)
 	default:
 		aggregator.OutputProvider = new(file.FileOutput)
 	}
