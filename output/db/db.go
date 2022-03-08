@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"customerProduts/models"
+	"customerProduts/utils"
 	"encoding/json"
 	"fmt"
 	"github.com/olivere/elastic/v7"
@@ -17,27 +17,19 @@ func (*DbOutput) FlushData(customerMap map[string]int64, filePath string) error 
 	esClient, err := GetESClient()
 
 	if err != nil {
-		fmt.Println("Erro initializing: ", err)
+		fmt.Println("Error initializing: ", err)
 		panic("Client fail")
 	}
+	for key, value := range customerMap {
+		dataJSON, err := json.Marshal(utils.CreateDataStruct(key, value))
+		js := string(dataJSON)
+		_, err = esClient.Index().Index("customer_data").BodyJson(js).Do(ctx)
 
-	newDataStruct := models.DataStruct{
-		ClientID: "2",
-		Product:  "2",
-		Group:    "2",
-		Time:     "2022/02/11 21:00",
-		Count:    1,
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("[Elastic][InsertCustomer]Insertion Successful: ", js)
 	}
-
-	dataJSON, err := json.Marshal(newDataStruct)
-	js := string(dataJSON)
-	_, err = esClient.Index().Index("customer_data").BodyJson(js).Do(ctx)
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("[Elastic][InsertCustomer]Insertion Successful")
 
 	return err
 }

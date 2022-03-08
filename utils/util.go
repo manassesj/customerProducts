@@ -1,8 +1,10 @@
 package utils
 
 import (
+	"customerProduts/models"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -39,4 +41,17 @@ func GetFile(path string) (*os.File, error) {
 func BuildKey(payload map[string]interface{}, timeFormat string) string {
 	return GetData(payload["time"].(string), timeFormat) + "_" + payload["client"].(string) +
 		"_" + payload["group"].(string) + "_" + payload["product"].(string)
+}
+
+func CreateDataStruct(key string, value int64) models.DataStruct {
+	properties := strings.Split(key, "_")
+
+	return models.DataStruct{
+		Time:     properties[0],
+		ClientID: properties[1],
+		Group:    properties[2],
+		Product:  properties[3],
+		Count:    value,
+	}
+
 }
